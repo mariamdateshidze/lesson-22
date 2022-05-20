@@ -1,6 +1,8 @@
 const gameBoard = document.querySelector('#game-board');
 const ctx = gameBoard.getContext('2d');
 
+const score = document.getElementById("score");
+
 const gameSpeed = 3;
 const squareSize = 50;
 const targetSize = 20;
@@ -10,12 +12,22 @@ let squareY = 400;
 let targetX = 100;
 let targetY = 200;
 
+
+
 let dirUp = false;
 let dirDown = false;
 let dirRight = false;
 let dirLeft = false;
 
 startGame();
+
+
+
+let state = {
+
+    score: 0
+};
+
 
 function startGame() {
   moveSquare();
@@ -50,6 +62,8 @@ function startGame() {
     }
   })
 }
+
+
 
 function draw() {
   clearBoard();
@@ -88,7 +102,14 @@ function moveSquare() {
   squareY = Math.max(0, squareY);
   if(isEaten()){
     moveTarget();
+
+    state.score++;
+    
+    score.innerHTML = "Score: " + state.score;
+
   }
+
+  
   draw();
   requestAnimationFrame(moveSquare);
 }
@@ -109,3 +130,15 @@ function isEaten() {
 
   return inX && inY;
 }
+
+const startBtn = document.querySelector('#startbtn');
+
+startBtn.addEventListener('click', () => {
+    console.log("start")
+    startGame;
+    moveSquare();
+    moveTarget();
+    draw();
+  })
+
+
